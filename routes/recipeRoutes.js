@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRecipe, getRecipes, getAllRecipes } = require('../controllers/recipeController');
+const { addRecipe, getAllRecipes } = require('../controllers/recipeController');
 
 const router = express.Router();
 
@@ -7,9 +7,6 @@ const router = express.Router();
 router.post('/', addRecipe);
 
 // Ruta para obtener todas las recetas
-router.get('/', getRecipes);
-
-router.get('/', getAllRecipes);
-
+router.get('/', getAllRecipes); // Solo debes mantener una definición para obtener todas las recetas
 
 module.exports = router;
