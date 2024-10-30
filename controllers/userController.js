@@ -35,4 +35,29 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, getAllUsers };
+// Nueva función para iniciar sesión
+const loginUser = async (req, res) => {
+    const { correo, contraseña } = req.body;
+
+    try {
+        // Buscar el usuario por correo
+        const user = await User.findUserByEmail(correo);
+        if (!user) {
+            return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
+        }
+
+        // Comparar la contraseña ingresada con la contraseña hasheada
+        const isMatch = await bcrypt.compare(contrasena, user.contraseña);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
+        }
+
+        // Si las credenciales son correctas, puedes enviar una respuesta de éxito
+        return res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error al iniciar sesión' });
+    }
+};
+
+module.exports = { registerUser, getAllUsers, loginUser };
