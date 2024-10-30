@@ -29,6 +29,20 @@ const getAllUsers = async () => {
     return res.rows; // Retorna todos los usuarios
 };
 
+// // Función para actualizar un usuario
+// const updateUser = async (id, userData) => {
+//     const { nombre, correo, foto_perfil } = userData;
+//     const query = `
+//         UPDATE Usuario 
+//         SET nombre = $1, correo = $2, foto_perfil = $3 
+//         WHERE id = $4 
+//         RETURNING *`;
+//     const values = [nombre, correo, foto_perfil || null, id];
+
+//     const res = await pool.query(query, values);
+//     return res.rows[0]; // Retorna el usuario actualizado
+// };
+
 // Función para eliminar un usuario
 const deleteUser = async (id) => {
     const query = 'DELETE FROM Usuario WHERE id = $1 RETURNING *';
