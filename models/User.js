@@ -2,12 +2,12 @@ const pool = require('../config/db');
 
 // Función para crear un nuevo usuario
 const createUser = async (userData) => {
-    const { nombre, correo, contraseña, foto_perfil } = userData;
+    const { nombre, correo, contrasena, foto_perfil } = userData;
     const query = `
-        INSERT INTO Usuario (nombre, correo, contraseña, foto_perfil)
+        INSERT INTO Usuario (nombre, correo, contrasena, foto_perfil)
         VALUES ($1, $2, $3, $4)
         RETURNING *`;
-    const values = [nombre, correo, contraseña, foto_perfil || null]; // La foto será null si no se proporciona
+    const values = [nombre, correo, contrasena, foto_perfil || null]; // La foto será null si no se proporciona
 
     const res = await pool.query(query, values);
     return res.rows[0]; // Retorna el usuario creado

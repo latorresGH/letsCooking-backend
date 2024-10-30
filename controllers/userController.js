@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 // Función para registrar un nuevo usuario
 const registerUser = async (req, res) => {
-    const { nombre, correo, contraseña, foto_perfil } = req.body;
+    const { nombre, correo, contrasena, foto_perfil } = req.body;
 
     try {
         // Verifica si el usuario ya existe
@@ -12,11 +12,11 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'El usuario ya existe' });
         }
 
-        // Hashea la contraseña
-        const hashedPassword = await bcrypt.hash(contraseña, 10);
+        // Hashea la contrasena
+        const hashedPassword = await bcrypt.hash(contrasena, 10);
 
         // Crea el nuevo usuario
-        const newUser = await User.createUser({ nombre, correo, contraseña: hashedPassword, foto_perfil });
+        const newUser = await User.createUser({ nombre, correo, contrasena: hashedPassword, foto_perfil });
 
         return res.status(201).json(newUser);
     } catch (error) {
@@ -36,19 +36,19 @@ const getAllUsers = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-    const { correo, contraseña } = req.body; // Usa "contraseña" en vez de "contrasena"
+    const { correo, contrasena } = req.body; // Usa "contrasena" en vez de "contrasena"
 
     try {
         // Buscar el usuario por correo
         const user = await User.findUserByEmail(correo);
         if (!user) {
-            return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
+            return res.status(401).json({ message: 'Usuario o contrasena incorrectos' });
         }
 
-        // Comparar la contraseña ingresada con la contraseña hasheada
-        const isMatch = await bcrypt.compare(contraseña, user.contraseña); // Asegúrate de usar "contraseña"
+        // Comparar la contrasena ingresada con la contrasena hasheada
+        const isMatch = await bcrypt.compare(contrasena, user.contrasena); // Asegúrate de usar "contrasena"
         if (!isMatch) {
-            return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
+            return res.status(401).json({ message: 'Usuario o contrasena incorrectos' });
         }
 
         // Si las credenciales son correctas, puedes enviar una respuesta de éxito

@@ -10,3 +10,4 @@ router.post('/', addRecipe);
 router.get('/', getAllRecipes); // Solo debes mantener una definición para obtener todas las recetas
 
 module.exports = router;
+
