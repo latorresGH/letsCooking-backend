@@ -35,9 +35,8 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// Nueva función para iniciar sesión
 const loginUser = async (req, res) => {
-    const { correo, contraseña } = req.body;
+    const { correo, contraseña } = req.body; // Usa "contraseña" en vez de "contrasena"
 
     try {
         // Buscar el usuario por correo
@@ -47,7 +46,7 @@ const loginUser = async (req, res) => {
         }
 
         // Comparar la contraseña ingresada con la contraseña hasheada
-        const isMatch = await bcrypt.compare(contrasena, user.contraseña);
+        const isMatch = await bcrypt.compare(contraseña, user.contraseña); // Asegúrate de usar "contraseña"
         if (!isMatch) {
             return res.status(401).json({ message: 'Usuario o contraseña incorrectos' });
         }
