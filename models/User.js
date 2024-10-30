@@ -52,10 +52,19 @@ const deleteUser = async (id) => {
     return res.rows[0]; // Retorna el usuario eliminado
 };
 
+const findUserById = async (id) => {
+    const query = 'SELECT * FROM Usuario WHERE id = $1';
+    const values = [id];
+
+    const res = await pool.query(query, values);
+    return res.rows[0]; // Retorna el usuario encontrado o undefined si no existe
+};
+
 module.exports = {
     createUser,
     findUserByEmail,
-    getAllUsers, // Asegúrate de exportar esta función
+    findUserById, // Asegúrate de exportar esta función
+    getAllUsers,
     updateUser,
     deleteUser,
 };
