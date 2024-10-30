@@ -74,4 +74,23 @@ const getUserById = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, getAllUsers, loginUser, getUserById }; // Asegúrate de exportar esta función
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { nombre, correo } = req.body;
+    const foto_perfil = req.file ? req.file.path : null; // Obtén la ruta de la imagen
+
+    try {
+        const updatedUser = await User.updateUser(id, { nombre, correo, foto_perfil });
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error al actualizar el usuario' });
+    }
+};
+
+// Otras funciones...
+
+module.exports = { registerUser, getAllUsers, loginUser, getUserById, updateUser };
