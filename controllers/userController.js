@@ -79,6 +79,11 @@ const updateUser = async (req, res) => {
     const { nombre, correo } = req.body;
     const foto_perfil = req.file ? req.file.path : null; // Obtén la ruta de la imagen
 
+    console.log("ID:", id);
+    console.log("Nombre:", nombre);
+    console.log("Correo:", correo);
+    console.log("Foto perfil:", foto_perfil); // Verifica si la ruta de la imagen se obtiene correctamente
+
     try {
         const updatedUser = await User.updateUser(id, { nombre, correo, foto_perfil });
         if (!updatedUser) {
@@ -86,10 +91,11 @@ const updateUser = async (req, res) => {
         }
         return res.status(200).json(updatedUser);
     } catch (error) {
-        console.error(error);
+        console.error("Error al actualizar el usuario:", error);
         return res.status(500).json({ message: 'Error al actualizar el usuario' });
     }
 };
+
 
 // Otras funciones...
 

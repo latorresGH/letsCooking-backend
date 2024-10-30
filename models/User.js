@@ -56,8 +56,13 @@ const updateUser = async (id, userData) => {
         RETURNING *`;
     const values = [nombre, correo, foto_perfil || null, id];
 
-    const res = await pool.query(query, values);
-    return res.rows[0]; // Retorna el usuario actualizado
+    try {
+        const res = await pool.query(query, values);
+        return res.rows[0]; // Retorna el usuario actualizado
+    } catch (error) {
+        console.error("Error en updateUser:", error);
+        throw error;
+    }
 };
 
 module.exports = {
